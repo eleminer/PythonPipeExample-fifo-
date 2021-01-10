@@ -1,13 +1,24 @@
 import os
+import time
+path = "/tmp/sopareplugin.fifo"
 try:
-    os.remove("/tmp/sopareplugin.fifo")
+    os.remove(path)
 except OSError:
     pass
 
-path = "/tmp/my_program2.fifo"
 os.mkfifo(path)
-
 fifo = open(path, "w")
+Data="nothing"
+i=0
+
+def sendingpipe():
+    global Data, i
+    fifo = open(path, "w")
+    print("sending")
+    i=i+1
+    fifo.write("DataString!"+str(i)+str(Data)+"\r\n")
+    fifo.close()
+
 while True:
-    fifo.write("Message from the sender!\n")
-fifo.close()
+    sendingpipe()
+    #time.sleep(0.5)

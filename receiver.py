@@ -1,9 +1,8 @@
 import os
-import sys
 
-path = "/tmp/sopareplugin.fifo"
-fifo = open(path, "r")
+FIFO = '/tmp/sopareplugin.fifo'
 while True:
-    for line in fifo:
-        print "Received: " + line,
-fifo.close()
+    with open(FIFO) as fifo:
+        for line in fifo:
+            print(line)
+            open(FIFO,"r").close()
